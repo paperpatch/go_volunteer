@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
 
 const userSchema = new Schema({
   firstName: {
@@ -18,14 +17,29 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    match: [/.+@.+\..+/, 'Must be a valid email address!']
   },
   password: {
     type: String,
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
+  profilePicture: {
+    type: String
+  },
+  connections: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
+  events: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Event'
+    }
+  ],
 });
 
 // set up pre-save middleware to create password
