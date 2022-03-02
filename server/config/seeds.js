@@ -1,5 +1,5 @@
 const db = require('./connection');
-const { User, Product, Category } = require('../models');
+const { User, Events } = require('../models');
 
 db.once('open', async () => {
   await Category.deleteMany();
@@ -36,7 +36,7 @@ db.once('open', async () => {
       quantity: 500
     },
     {
-      name: 'Toilet Paper',
+      name: 'Toilet Paper 2',
       category: categories[1]._id,
       description:
         'Donec volutpat erat erat, sit amet gravida justo sodales in. Phasellus tempus euismod urna. Proin ultrices nisi ut ipsum congue, vitae porttitor libero suscipit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam lacinia a nisi non congue.',
