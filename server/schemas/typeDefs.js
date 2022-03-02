@@ -1,37 +1,13 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  type Category {
-    _id: ID
-    name: String
-  }
-
-  type Product {
-    _id: ID
-    name: String
-    description: String
-    image: String
-    quantity: Int
-    price: Float
-    category: Category
-  }
-
-  type Order {
-    _id: ID
-    purchaseDate: String
-    products: [Product]
-  }
-
   type User {
     _id: ID
     firstName: String
     lastName: String
     email: String
-    orders: [Order]
-  }
-
-  type Checkout {
-    session: ID
+    profilePicture: String
+    events: [Event]
   }
 
   type Auth {
@@ -39,21 +15,108 @@ const typeDefs = gql`
     user: User
   }
 
-  type Query {
-    categories: [Category]
-    products(category: ID, name: String): [Product]
-    product(_id: ID!): Product
+  type Event {
+    _id: ID
+    host: User
+    title: String
+    attendees: [User]
+    location: String
+    description: String
+    date: String
+    startTime: String
+    endTime: String
+    url: String
+    image: String
+    createdAt: String
+    comments: [Comment]
+    eventLikes: [EventLike]
+    verify: [Verify]
+    isVerified: Boolean
+  }
+
+  type EventLike {
+    _id: ID
+    event: Event
+    eventLikes: Int
     user: User
-    order(_id: ID!): Order
-    checkout(products: [ID]!): Checkout
+  }
+
+  type Verify {
+    _id: ID
+    event: Event
+    verifyNumber: Int
+    user: User
+  }
+
+  type Comment {
+    _id: ID
+    author: User
+    commentText: String
+    createdAt: String
+    likes: Int
+    replies: [Reply]
+  }
+
+  type Reply {
+    _id: ID
+    author: User
+    replyBody: String
+    createdAt: String
+  }
+
+  type Query {
+    me: User
+    user(username: String!): User
+    users: [User]
+    event(_id: ID): Event
+    events: [Event]
   }
 
   type Mutation {
-    addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addOrder(products: [ID]!): Order
-    updateUser(firstName: String, lastName: String, email: String, password: String): User
-    updateProduct(_id: ID!, quantity: Int!): Product
-    login(email: String!, password: String!): Auth
+    addUser(
+      firstName: String!,
+      lastName: String!,
+      email: String!,
+      password: String!,
+    ): Auth
+
+    updateUser(
+      firstName: String,
+      lastName: String,
+      email: String,
+      password: String
+    ): User
+
+    login(
+      email: String!,
+      password: String!
+    ): Auth
+
+    createEvent(
+      title: String!
+      location: String!
+      description: String!
+      date: String!
+      startTime: String!
+      endTime: String!
+      url: String!
+      image: String!
+    ): Event
+
+    addEventComment(
+      eventId: ID,
+      commentText: String!
+    ): Event
+
+    removeComment(
+      commentId: ID!,
+      eventId: ID,
+    ): Event
+
+    joinEvent(eventId: ID!): Event
+    leaveEvent(eventId: ID!): Event
+    cancelEvent(eventId: ID!): Event
+    addEventLike(eventId: ID!): Event
   }
 `;
 
