@@ -6,6 +6,9 @@ export const LOGIN = gql`
       token
       user {
         _id
+        firstName
+        lastName
+        email
       }
     }
   }
@@ -17,23 +20,16 @@ export const ADD_USER = gql`
     $lastName: String!
     $email: String!
     $password: String!
-    $location: String!
   ) {
     addUser(
       firstName: $firstName
       lastName: $lastName
       email: $email
       password: $password
-      location: $location
     ) {
       token
       user {
         _id
-        firstName
-        lastName
-        email
-        location
-        profilePicture
       }
     }
   }
