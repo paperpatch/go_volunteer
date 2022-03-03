@@ -1,52 +1,31 @@
 import { useReducer } from "react";
 import {
-  UPDATE_PRODUCTS,
-  ADD_TO_CART,
-  UPDATE_CART_QUANTITY,
-  REMOVE_FROM_CART,
-  ADD_MULTIPLE_TO_CART,
+  UPDATE_EVENTS,
+  ADD_TO_SIDEBAR,
+  REMOVE_FROM_SIDEBAR,
   UPDATE_CATEGORIES,
   UPDATE_CURRENT_CATEGORY,
-  CLEAR_CART,
-  TOGGLE_CART
+  TOGGLE_SIDEBAR
 } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case UPDATE_PRODUCTS:
+    case UPDATE_EVENTS:
       return {
         ...state,
-        products: [...action.products],
+        events: [...action.products],
       };
 
-    case ADD_TO_CART:
+    case ADD_TO_SIDEBAR:
       return {
         ...state,
         cartOpen: true,
         cart: [...state.cart, action.product],
       };
 
-    case ADD_MULTIPLE_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, ...action.products],
-      };
-
-    case UPDATE_CART_QUANTITY:
-      return {
-        ...state,
-        cartOpen: true,
-        cart: state.cart.map(product => {
-          if (action._id === product._id) {
-            product.purchaseQuantity = action.purchaseQuantity
-          }
-          return product
-        })
-      };
-
-    case REMOVE_FROM_CART:
-      let newState = state.cart.filter(product => {
-        return product._id !== action._id;
+    case REMOVE_FROM_SIDEBAR:
+      let newState = state.cart.filter(event => {
+        return event._id !== action._id;
       });
 
       return {
@@ -55,14 +34,7 @@ export const reducer = (state, action) => {
         cart: newState
       };
 
-    case CLEAR_CART:
-      return {
-        ...state,
-        cartOpen: false,
-        cart: []
-      };
-
-    case TOGGLE_CART:
+    case TOGGLE_SIDEBAR:
       return {
         ...state,
         cartOpen: !state.cartOpen
@@ -85,6 +57,6 @@ export const reducer = (state, action) => {
   }
 };
 
-export function useProductReducer(initialState) {
+export function useEventReducer(initialState) {
   return useReducer(reducer, initialState)
 }

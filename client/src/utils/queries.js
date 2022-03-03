@@ -117,7 +117,6 @@ export const QUERY_EVENT = gql`
         lastName
       }
       location
-      isVerified
       description
       date
       startTime
@@ -154,16 +153,6 @@ export const QUERY_EVENT = gql`
           _id
         }
       }
-      verify {
-        _id
-        user {
-          _id
-        }
-        event {
-          _id
-        }
-        verifyNumber
-      }
     }
   }
 `;
@@ -188,16 +177,6 @@ export const QUERY_EVENTS = gql`
       date
       isVerified
       startTime
-      verify {
-        _id
-        user {
-          _id
-        }
-        event {
-          _id
-        }
-        verifyNumber
-      }
       endTime
       url
       image
