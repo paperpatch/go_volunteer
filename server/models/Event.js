@@ -4,7 +4,7 @@ const dateFormatter = require("../utils/dateFormat");
 const eventSchema = new Schema(
   {
     host: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: "User",
     },
     title: {
@@ -15,7 +15,7 @@ const eventSchema = new Schema(
     },
     attendees: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: "User",
       },
     ],

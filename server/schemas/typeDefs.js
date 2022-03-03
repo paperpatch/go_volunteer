@@ -1,6 +1,11 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  type Category {
+    _id: ID
+    name: String
+  }
+
   type User {
     _id: ID
     firstName: String
@@ -30,8 +35,6 @@ const typeDefs = gql`
     createdAt: String
     comments: [Comment]
     eventLikes: [EventLike]
-    verify: [Verify]
-    isVerified: Boolean
   }
 
   type EventLike {

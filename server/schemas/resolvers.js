@@ -3,7 +3,7 @@ const {
   Event,
   EventLike,
   Comment,
-  Verify
+  Category
 } = require('../models');
 const { AuthenticationError } = require('apollo-server-express');
 const { signToken } = require('../utils/auth');
@@ -67,8 +67,7 @@ const resolvers = {
         .populate({ path: "comments", populate: "author" })
         .populate("verify")
         .select('-__v');
-    }
-
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
