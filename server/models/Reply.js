@@ -1,5 +1,6 @@
 const { Schema } = require("mongoose");
 const dateFormatter = require("../utils/dateFormat");
+const User = require('./User');
 
 const replySchema = new Schema(
   {
@@ -8,10 +9,7 @@ const replySchema = new Schema(
       required: true,
       maxlength: 280,
     },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    },
+    author: [ User.schema ],
     createdAt: {
       type: Date,
       default: Date.now,

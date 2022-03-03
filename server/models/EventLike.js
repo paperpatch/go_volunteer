@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const User = require('./User');
 
 const EventLikeSchema = new Schema({
   event: {
@@ -9,10 +10,7 @@ const EventLikeSchema = new Schema({
     type: Number,
     default: 0,
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
+  user: [ User.schema ],
 });
 
 const EventLike = model("EventLike", EventLikeSchema);

@@ -3,13 +3,15 @@ const { User, Category, Event, Comment } = require('../models');
 
 db.once('open', async () => {
   await Category.deleteMany();
+  await User.deleteMany();
+  await Comment.deleteMany();
 
   const categories = await Category.insertMany([
     { name: 'Children & Youth' },
     { name: 'Community' },
     { name: 'Environment' },
     { name: 'Health & Medicine' },
-    { name: 'Sports & Recreation' }
+    { name: 'Sports & Recreations' }
   ]);
 
   console.log('categories seeded');
@@ -47,23 +49,19 @@ db.once('open', async () => {
 
   console.log('events seeded');
 
-  await User.deleteMany();
-
   await User.create({
     firstName: 'Test',
     lastName: 'Test',
     email: 'test@testmail.com',
     password: 'test',
-    orders: [
+    event: [
       {
-        events: [events[0]._id, events[0]._id, events[1]._id]
+        events: [events[0]._id, events[1]._id]
       }
     ]
   });
 
   console.log('users seeded');
-
-  await Comment.deleteMany();
 
   process.exit();
 });

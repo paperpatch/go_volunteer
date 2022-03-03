@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
   type Category {
@@ -8,16 +8,18 @@ const typeDefs = gql`
 
   type User {
     _id: ID
-    firstName: String
-    lastName: String
-    email: String
+    firstName: String!
+    lastName: String!
+    email: String!
+    location: String
     profilePicture: String
+    connections: [User]
     events: [Event]
   }
 
   type Auth {
-    token: ID
     user: User
+    token: ID!
   }
 
   type Event {
@@ -37,20 +39,6 @@ const typeDefs = gql`
     eventLikes: [EventLike]
   }
 
-  type EventLike {
-    _id: ID
-    event: Event
-    eventLikes: Int
-    user: User
-  }
-
-  type Verify {
-    _id: ID
-    event: Event
-    verifyNumber: Int
-    user: User
-  }
-
   type Comment {
     _id: ID
     author: User
@@ -67,34 +55,31 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type EventLike {
+    _id: ID
+    event: Event
+    eventLikes: Int
+    user: User
+  }
+
   type Query {
     me: User
-    user(username: String!): User
+    categories: [Category]
     users: [User]
-    event(_id: ID): Event
+    user(_id: ID!): User
     events: [Event]
+    event(_id: ID): Event
   }
 
   type Mutation {
-    addUser(
-      firstName: String!,
-      lastName: String!,
-      email: String!,
-      password: String!,
-    ): Auth
-
-    updateUser(
-      firstName: String,
-      lastName: String,
-      email: String,
-      password: String
-    ): User
-
-    login(
-      email: String!,
+    createUser(
+      firstName: String!
+      lastName: String!
+      email: String!
       password: String!
+      location: String!
     ): Auth
-
+    login(email: String!, password: String!): Auth
     createEvent(
       title: String!
       location: String!
@@ -105,20 +90,14 @@ const typeDefs = gql`
       url: String!
       image: String!
     ): Event
-
-    addEventComment(
-      eventId: ID,
-      commentText: String!
-    ): Event
-
-    removeComment(
-      commentId: ID!,
-      eventId: ID,
-    ): Event
-
+    addConnection(connectionId: ID!): User
+    removeConnection(connectionId: ID!): User
+    addEventComment(eventId: ID, commentText: String!): Event
+    addReply(commentId: ID!, replyBody: String!): Comment
     joinEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
     cancelEvent(eventId: ID!): Event
+    removeComment(commentId: ID!, eventId: ID): Event
     addEventLike(eventId: ID!): Event
   }
 `;

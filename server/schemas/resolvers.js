@@ -1,48 +1,46 @@
-const {
-  User,
-  Event,
-  EventLike,
-  Comment,
-  Category
-} = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
-const { signToken } = require('../utils/auth');
+const { User, Event, Comment, EventLike } = require("../models");
+const { AuthenticationError } = require("apollo-server-express");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // USERS
-
-    // find current logged in user
+    categories: async () => {
+      return await Category.find();
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
-          .select('-__v -password')
-          .populate('thoughts')
-          .populate('friends');
+          .select("-__v -password")
+          .populate("events")
+          .populate({ path: "events", populate: "host" })
+          .populate("goodDeeds")
+          .populate({ path: "goodDeeds", populate: "host" })
+          .populate("connections");
 
         return userData;
       }
-
-      throw new AuthenticationError('Not logged in');
+      throw new AuthenticationError("Not logged in");
     },
 
     // get all users
     users: async () => {
-      return User.find()
-        .select('-__v -password')
-        .populate('thoughts')
-        .populate('friends');
+      return await User.find()
+        .select("-__v -password")
+        .populate("events")
+        .populate("goodDeeds")
+        .populate({ path: "events", populate: "verify" });
     },
 
-    // get one user by ID
-    user: async (parent, { username }) => {
-      return User.findOne({ username })
-        .select('-__v -password')
-        .populate('friends')
-        .populate('thoughts');
+    // find user by id
+    user: async (parent, { _id }) => {
+      return await User.findOne({ _id })
+        .select("-__v -password")
+        .populate("events")
+        .populate({ path: "events", populate: "host" })
+        .populate("goodDeeds")
+        .populate("connections")
+        .populate({ path: "goodDeeds", populate: "host" });
     },
-
-    // EVENTS
 
     // get all events
     events: async () => {
@@ -50,56 +48,55 @@ const resolvers = {
         .sort({ date: -1 })
         .populate("host")
         .populate("attendees")
+        .populate("comments")
         .populate("eventLikes")
         .populate({ path: "comments", populate: "author" })
         .populate("verify")
-        .select('-__v');
+        .select("-__v");
     },
 
-    // get one event by ID
     event: async (parent, { _id }) => {
-      return await Event.findOne({ _id })
+      const searchedEvent = await Event.findOne({ _id })
         .sort({ date: -1 })
         .populate("host")
         .populate("attendees")
         .populate("comments")
         .populate("eventLikes")
         .populate({ path: "comments", populate: "author" })
+        .populate("eventLikes")
         .populate("verify")
-        .select('-__v');
+        .select("-__v");
+      return searchedEvent;
     },
   },
+
   Mutation: {
-    addUser: async (parent, args) => {
+    createUser: async (parent, args) => {
       const user = await User.create(args);
-      const token = signToken(user);
 
-      return { token, user };
-    },
-
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+      if (!user) {
+        throw new Error(
+          "Something went wrong when signing up. Please try again."
+        );
       }
-
-      throw new AuthenticationError('Not logged in');
+      const token = signToken(user);
+      return { user, token };
     },
 
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect login information");
       }
 
-      const correctPw = await user.isCorrectPassword(password);
+      const correctPassword = await user.isCorrectPassword(password);
 
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+      if (!correctPassword) {
+        throw new AuthenticationError("Incorrect login information");
       }
 
       const token = signToken(user);
-
       return { token, user };
     },
 
@@ -126,6 +123,43 @@ const resolvers = {
       }
     },
 
+    //add connection
+    addConnection: async (parent, { connectionId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { connections: connectionId } },
+          { new: true }
+        ).populate("connections");
+
+        const userToBeAdded = User.findOne({
+          _id: connectionId,
+        });
+
+        return userToBeAdded;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to add connections."
+      );
+    },
+
+    // remove connection
+    removeConnection: async (parent, { connectionId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { connections: connectionId } },
+          { new: true }
+        ).populate("connections");
+
+        return updatedUser;
+      }
+      throw new AuthenticationError(
+        "You need to be logged in to add or remove connections."
+      );
+    },
+
+    // add comment to event or a good deed
     addEventComment: async (parent, args, context) => {
       if (context.user) {
         const comment = await Comment.create({
@@ -148,38 +182,21 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
-    removeComment: async (parent, args, context) => {
+    //add reply to comment
+    addReply: async (parent, { commentId, replyBody }, context) => {
+      console.log(context.user);
       if (context.user) {
-        const removedComment = await Comment.findByIdAndRemove(
-          { _id: args.commentId },
-          { new: true }
-        );
+        const updatedComment = await Comment.findOneAndUpdate(
+          { _id: commentId },
+          { $push: { replies: { replyBody, author: context.user._id } } },
+          { new: true, runValidators: true }
+        )
+          .populate("replies")
+          .populate({ path: "replies", populate: "author" });
 
-        // if params are event-oriented, update the event, otherwise update the good deed
-        if (args.eventId) {
-          const updatedEvent = await Event.findByIdAndUpdate(
-            { _id: args.eventId },
-            { $pull: { comments: removedComment } },
-            { new: true }
-          )
-            .populate("comments")
-            .populate({ path: "comments", populate: "author" });
-          return updatedEvent;
-        } else if (args.goodDeedId) {
-          const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
-            { _id: args.goodDeedId },
-            { $pull: { comments: removedComment } },
-            { new: true }
-          ).populate("helper");
-          return updatedGoodDeed.populate({
-            path: "comments",
-            populate: "author",
-          });
-        } else {
-          throw new Error("Something went wrong!");
-        }
+        return updatedComment;
       }
-      throw new AuthenticationError("need logged in!");
+      throw new AuthenticationError("You need to be logged in!");
     },
 
     joinEvent: async (parent, { eventId }, context) => {
@@ -230,6 +247,40 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
 
+    removeComment: async (parent, args, context) => {
+      if (context.user) {
+        const removedComment = await Comment.findByIdAndRemove(
+          { _id: args.commentId },
+          { new: true }
+        );
+
+        // if params are event-oriented, update the event, otherwise update the good deed
+        if (args.eventId) {
+          const updatedEvent = await Event.findByIdAndUpdate(
+            { _id: args.eventId },
+            { $pull: { comments: removedComment } },
+            { new: true }
+          )
+            .populate("comments")
+            .populate({ path: "comments", populate: "author" });
+          return updatedEvent;
+        } else if (args.goodDeedId) {
+          const updatedGoodDeed = await GoodDeed.findByIdAndUpdate(
+            { _id: args.goodDeedId },
+            { $pull: { comments: removedComment } },
+            { new: true }
+          ).populate("helper");
+          return updatedGoodDeed.populate({
+            path: "comments",
+            populate: "author",
+          });
+        } else {
+          throw new Error("Something went wrong!");
+        }
+      }
+      throw new AuthenticationError("need logged in!");
+    },
+
     addEventLike: async (parent, args, context) => {
       if (context.user) {
         const createdLike = await EventLike.create({
@@ -252,7 +303,7 @@ const resolvers = {
       }
       throw new AuthenticationError("need logged in!");
     },
-  }
+  },
 };
 
 module.exports = resolvers;

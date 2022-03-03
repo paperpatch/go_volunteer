@@ -40,7 +40,11 @@ const userSchema = new Schema({
       ref: 'Event'
     }
   ],
-});
+},
+{
+  toJSON: { virtuals: true }
+}
+);
 
 // set up pre-save middleware to create password
 userSchema.pre('save', async function(next) {

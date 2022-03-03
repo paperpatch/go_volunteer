@@ -1,7 +1,16 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
+
+export const QUERY_CATEGORIES = gql`
+  {
+    categories {
+      _id
+      name
+    }
+  }
+`;
 
 export const QUERY_ME = gql`
-  {
+  query me {
     me {
       _id
       firstName
@@ -9,6 +18,11 @@ export const QUERY_ME = gql`
       email
       location
       profilePicture
+      connections {
+        _id
+        firstName
+        lastName
+      }
       events {
         _id
         host {
@@ -27,6 +41,40 @@ export const QUERY_ME = gql`
         attendees {
           _id
         }
+      }
+    }
+  }
+`;
+
+export const QUERY_USERS = gql`
+  query users {
+    users {
+      _id
+      firstName
+      lastName
+      email
+      location
+      profilePicture
+      connections {
+        _id
+        firstName
+        lastName
+      }
+      events {
+        _id
+        host {
+          _id
+          firstName
+          lastName
+        }
+        title
+        location
+        description
+        date
+        startTime
+        endTime
+        url
+        image
       }
     }
   }
@@ -67,35 +115,51 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_USERS = gql`
-  query users {
-    users {
+export const QUERY_EVENTS = gql`
+  {
+    events {
       _id
-      firstName
-      lastName
-      email
-      location
-      profilePicture
-      connections {
+      host {
         _id
         firstName
         lastName
       }
-      events {
+      title
+      attendees {
         _id
-        host {
+        firstName
+        lastName
+      }
+      location
+      description
+      date
+      startTime
+      endTime
+      url
+      image
+      comments {
+        _id
+        commentText
+        createdAt
+        replies {
+          _id
+          replyBody
+        }
+        author {
           _id
           firstName
           lastName
         }
-        title
-        location
-        description
-        date
-        startTime
-        endTime
-        url
-        image
+      }
+      eventLikes {
+        _id
+        user {
+          _id
+        }
+        eventLikes
+        event {
+          _id
+        }
       }
     }
   }
@@ -157,57 +221,6 @@ export const QUERY_EVENT = gql`
   }
 `;
 
-export const QUERY_EVENTS = gql`
-  {
-    events {
-      _id
-      host {
-        _id
-        firstName
-        lastName
-      }
-      title
-      attendees {
-        _id
-        firstName
-        lastName
-      }
-      location
-      description
-      date
-      isVerified
-      startTime
-      endTime
-      url
-      image
-      comments {
-        _id
-        commentText
-        createdAt
-        replies {
-          _id
-          replyBody
-        }
-        author {
-          _id
-          firstName
-          lastName
-        }
-      }
-      eventLikes {
-        _id
-        user {
-          _id
-        }
-        eventLikes
-        event {
-          _id
-        }
-      }
-    }
-  }
-`;
-
 export const QUERY_COMMENTS = gql`
   {
     comments {
@@ -220,15 +233,6 @@ export const QUERY_COMMENTS = gql`
       commentText
       createdAt
       likes
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
     }
   }
 `;
