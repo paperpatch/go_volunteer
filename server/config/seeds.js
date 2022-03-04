@@ -11,7 +11,7 @@ db.once('open', async () => {
     { name: 'Community' },
     { name: 'Environment' },
     { name: 'Health & Medicine' },
-    { name: 'Sports & Recreations' }
+    { name: 'Sports & Recreation' }
   ]);
 
   console.log('categories seeded');

@@ -16,7 +16,7 @@ const Sidebar = () => {
   function calculateTotal() {
     let sum = 0;
     state.cart.forEach((item) => {
-      sum += item.price * item.purchaseQuantity;
+      sum += 1;
     });
     return sum.toFixed(2);
   }
@@ -25,7 +25,7 @@ const Sidebar = () => {
     return (
       <div className="cart-closed" onClick={toggleSidebar}>
         <span role="img" aria-label="trash">
-          🛒
+          ☰
         </span>
       </div>
     );
@@ -36,7 +36,7 @@ const Sidebar = () => {
       <div className="close" onClick={toggleSidebar}>
         [close]
       </div>
-      <h2>Shopping Cart</h2>
+      <h2>Recent Events</h2>
       {state.cart.length ? (
         <div>
           {state.cart.map((item) => (
@@ -52,7 +52,7 @@ const Sidebar = () => {
           <span role="img" aria-label="shocked">
             😱
           </span>
-          You haven't added anything to your profile yet!
+          There's no scheduled events in your list.
         </h3>
       )}
     </div>
