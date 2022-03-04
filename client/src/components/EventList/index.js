@@ -7,7 +7,7 @@ import { QUERY_EVENTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
 
-function ProductList() {
+function EventList() {
   const [state, dispatch] = useStoreContext();
 
   const { currentCategory } = state;
@@ -18,44 +18,44 @@ function ProductList() {
     if (data) {
       dispatch({
         type: UPDATE_EVENTS,
-        products: data.products,
+        events: data.events,
       });
-      data.products.forEach((product) => {
-        idbPromise('products', 'put', product);
+      data.events.forEach((product) => {
+        idbPromise('events', 'put', product);
       });
     } else if (!loading) {
-      idbPromise('products', 'get').then((products) => {
+      idbPromise('events', 'get').then((events) => {
         dispatch({
           type: UPDATE_EVENTS,
-          products: products,
+          events: events,
         });
       });
     }
   }, [data, loading, dispatch]);
 
-  function filterProducts() {
+  function filterEvents() {
     if (!currentCategory) {
-      return state.products;
+      return state.events;
     }
 
-    return state.products.filter(
-      (product) => product.category._id === currentCategory
+    return state.events.filter(
+      (event) => event.category._id === currentCategory
     );
   }
 
   return (
     <div className="my-2">
       <h2>Upcoming Events:</h2>
-      {state.products.length ? (
+      {state.events.length ? (
         <div className="flex-row">
-          {filterProducts().map((product) => (
+          {filterEvents().map((event) => (
             <EventItem
-              key={product._id}
-              _id={product._id}
-              image={product.image}
-              name={product.name}
-              price={product.price}
-              quantity={product.quantity}
+              key={event._id}
+              _id={event._id}
+              image={event.image}
+              title={event.title}
+              price={event.price}
+              quantity={event.quantity}
             />
           ))}
         </div>
@@ -67,4 +67,4 @@ function ProductList() {
   );
 }
 
-export default ProductList;
+export default EventList;

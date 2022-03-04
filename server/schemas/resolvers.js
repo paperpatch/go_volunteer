@@ -1,4 +1,4 @@
-const { User, Event, Comment, EventLike } = require("../models");
+const { User, Event, Category, Comment, EventLike } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -7,14 +7,33 @@ const resolvers = {
     categories: async () => {
       return await Category.find();
     },
+
+    events: async (parent, { category, name }) => {
+      const params = {};
+
+      if (category) {
+        params.category = category;
+      }
+
+      if (name) {
+        params.name = {
+          $regex: name
+        };
+      }
+
+      return await Event.find(params).populate('category');
+    },
+
+    event: async (parent, { _id }) => {
+      return await Event.findById(_id).populate('category');
+    },
+
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate("events")
           .populate({ path: "events", populate: "host" })
-          .populate("goodDeeds")
-          .populate({ path: "goodDeeds", populate: "host" })
           .populate("connections");
 
         return userData;
@@ -27,7 +46,6 @@ const resolvers = {
       return await User.find()
         .select("-__v -password")
         .populate("events")
-        .populate("goodDeeds")
         .populate({ path: "events", populate: "verify" });
     },
 
@@ -37,37 +55,33 @@ const resolvers = {
         .select("-__v -password")
         .populate("events")
         .populate({ path: "events", populate: "host" })
-        .populate("goodDeeds")
         .populate("connections")
-        .populate({ path: "goodDeeds", populate: "host" });
     },
 
-    // get all events
-    events: async () => {
-      return await Event.find()
-        .sort({ date: -1 })
-        .populate("host")
-        .populate("attendees")
-        .populate("comments")
-        .populate("eventLikes")
-        .populate({ path: "comments", populate: "author" })
-        .populate("verify")
-        .select("-__v");
-    },
+    // // get all events
+    // events: async () => {
+    //   return await Event.find()
+    //     .sort({ date: -1 })
+    //     .populate("host")
+    //     .populate("attendees")
+    //     .populate("comments")
+    //     .populate("eventLikes")
+    //     .populate({ path: "comments", populate: "author" })
+    //     .select("-__v");
+    // },
 
-    event: async (parent, { _id }) => {
-      const searchedEvent = await Event.findOne({ _id })
-        .sort({ date: -1 })
-        .populate("host")
-        .populate("attendees")
-        .populate("comments")
-        .populate("eventLikes")
-        .populate({ path: "comments", populate: "author" })
-        .populate("eventLikes")
-        .populate("verify")
-        .select("-__v");
-      return searchedEvent;
-    },
+    // event: async (parent, { _id }) => {
+    //   const searchedEvent = await Event.findOne({ _id })
+    //     .sort({ date: -1 })
+    //     .populate("host")
+    //     .populate("attendees")
+    //     .populate("comments")
+    //     .populate("eventLikes")
+    //     .populate({ path: "comments", populate: "author" })
+    //     .populate("eventLikes")
+    //     .select("-__v");
+    //   return searchedEvent;
+    // },
   },
 
   Mutation: {

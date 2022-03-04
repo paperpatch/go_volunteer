@@ -5,12 +5,12 @@ import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_SIDEBAR } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-function ProductItem(item) {
+function EventItem(item) {
   const [state, dispatch] = useStoreContext();
 
   const {
     image,
-    name,
+    title,
     _id,
     price,
     quantity
@@ -18,19 +18,19 @@ function ProductItem(item) {
 
   const { cart } = state
 
-  const addToCart = () => {
+  const joinEvent = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
     if (itemInCart) {
       idbPromise('cart', 'put', {
         ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+        eventQuantity: parseInt(itemInCart.eventQuantity) + 1
       });
     } else {
       dispatch({
         type: ADD_TO_SIDEBAR,
-        product: { ...item, purchaseQuantity: 1 }
+        product: { ...item, eventQuantity: 1 }
       });
-      idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', { ...item, eventQuantity: 1 });
     }
   }
 
@@ -38,18 +38,18 @@ function ProductItem(item) {
     <div className="card px-1 py-1">
       <Link to={`/event/${_id}`}>
         <img
-          alt={name}
+          alt={title}
           src={`/images/${image}`}
         />
-        <p>{name}</p>
+        <p>{title}</p>
       </Link>
       <div>
         <div>{quantity} {pluralize("item", quantity)} in stock</div>
         <span>${price}</span>
       </div>
-      <button onClick={addToCart}>Add to cart</button>
+      <button onClick={joinEvent}>Add to cart</button>
     </div>
   );
 }
 
-export default ProductItem;
+export default EventItem;

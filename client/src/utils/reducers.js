@@ -13,14 +13,14 @@ export const reducer = (state, action) => {
     case UPDATE_EVENTS:
       return {
         ...state,
-        events: [...action.products],
+        events: [...action.events],
       };
 
     case ADD_TO_SIDEBAR:
       return {
         ...state,
         cartOpen: true,
-        cart: [...state.cart, action.product],
+        cart: [...state.cart, action.event],
       };
 
     case REMOVE_FROM_SIDEBAR:
