@@ -20,8 +20,8 @@ function EventList() {
         type: UPDATE_EVENTS,
         events: data.events,
       });
-      data.events.forEach((product) => {
-        idbPromise('events', 'put', product);
+      data.events.forEach((event) => {
+        idbPromise('events', 'put', event);
       });
     } else if (!loading) {
       idbPromise('events', 'get').then((events) => {
@@ -54,8 +54,11 @@ function EventList() {
               _id={event._id}
               image={event.image}
               title={event.title}
-              price={event.price}
-              quantity={event.quantity}
+              location={event.location}
+              date={event.date}
+              startTime={event.startTime}
+              endTime={event.endTime}
+              url={event.url}
             />
           ))}
         </div>

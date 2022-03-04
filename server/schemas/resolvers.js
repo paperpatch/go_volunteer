@@ -8,16 +8,16 @@ const resolvers = {
       return await Category.find();
     },
 
-    events: async (parent, { category, name }) => {
+    events: async (parent, { category, title }) => {
       const params = {};
 
       if (category) {
         params.category = category;
       }
 
-      if (name) {
-        params.name = {
-          $regex: name
+      if (title) {
+        params.title = {
+          $regex: title
         };
       }
 
@@ -49,14 +49,29 @@ const resolvers = {
         .populate({ path: "events", populate: "verify" });
     },
 
-    // find user by id
-    user: async (parent, { _id }) => {
-      return await User.findOne({ _id })
-        .select("-__v -password")
-        .populate("events")
-        .populate({ path: "events", populate: "host" })
-        .populate("connections")
+    user: async (parent, args, context) => {
+      if (context.user) {
+        const user = await User.findById(context.user._id).populate({
+          path: 'orders.products',
+          populate: 'category'
+        });
+
+        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
+
+        return user;
+      }
+
+      throw new AuthenticationError('Not logged in');
     },
+
+    // find user by id
+    // user: async (parent, { _id }) => {
+    //   return await User.findOne({ _id })
+    //     .select("-__v -password")
+    //     .populate("events")
+    //     .populate({ path: "events", populate: "host" })
+    //     .populate("connections")
+    // },
 
     // // get all events
     // events: async () => {

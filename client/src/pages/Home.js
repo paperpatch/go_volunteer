@@ -6,9 +6,9 @@ import Sidebar from "../components/Sidebar";
 const Home = () => {
   return (
     <div className="container">
-      <Sidebar />
       <CategoryMenu />
       <EventList />
+      <Sidebar />
     </div>
   );
 };

@@ -2,11 +2,10 @@ const db = require('./connection');
 const { User, Category, Event, Comment, EventLike } = require('../models');
 
 db.once('open', async () => {
-  await Category.deleteMany();
   await Comment.deleteMany();
-  await Event.deleteMany();
   await EventLike.deleteMany();
-  await User.deleteMany();
+
+  await Category.deleteMany();
 
   const categories = await Category.insertMany([
     { name: 'Children & Youth' },
@@ -18,6 +17,8 @@ db.once('open', async () => {
 
   console.log('categories seeded');
 
+  await Event.deleteMany();
+
   const events = await Event.insertMany([
     {
       host: 'Test',
@@ -27,14 +28,29 @@ db.once('open', async () => {
       category: categories[0]._id,
       location: 'Your local special olympics committee',
       date: 'March 2, 2022',
-      startTime: 'April 1, 2022',
-      endTime: 'June 26, 2022',
+      startTime: '9 AM',
+      endTime: '5 PM',
       url: 'https://www.specialolympics.org/',
       image: 'Special_Olympics_logo.svg',
     },
+    // {
+    //   host: 'Random',
+    //   title: 'High school tutoring',
+    //   description:
+    //     'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
+    //   category: categories[0]._id,
+    //   location: '[redacted] High School',
+    //   date: 'March 5, 2022',
+    //   startTime: '7 PM',
+    //   endTime: '9 PM',
+    //   url: 'https://en.wikipedia.org/wiki/Secondary_school',
+    //   image: 'tutoring.jpg',
+    // },
   ]);
 
   console.log('events seeded');
+
+  await User.deleteMany();
 
   await User.create({
     firstName: 'Test',

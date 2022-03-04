@@ -7,6 +7,7 @@ const replySchema = new Schema(
     replyBody: {
       type: String,
       required: true,
+      minlength: 1,
       maxlength: 280,
     },
     author: [ User.schema ],

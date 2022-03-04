@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { pluralize } from "../../utils/helpers"
+// import { pluralize } from "../../utils/helpers"
 import { useStoreContext } from "../../utils/GlobalState";
 import { ADD_TO_SIDEBAR } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
@@ -9,11 +9,14 @@ function EventItem(item) {
   const [state, dispatch] = useStoreContext();
 
   const {
+    _id,
     image,
     title,
-    _id,
-    price,
-    quantity
+    location,
+    date,
+    startTime,
+    endTime,
+    url,
   } = item;
 
   const { cart } = state
@@ -44,10 +47,13 @@ function EventItem(item) {
         <p>{title}</p>
       </Link>
       <div>
-        <div>{quantity} {pluralize("item", quantity)} in stock</div>
-        <span>${price}</span>
+        <div>Location: {location}</div>
+        <div>Date: {date}</div>
+        <div>startTime: {startTime}</div>
+        <div>endTime: {endTime}</div>
+        <div>url: {url}</div>
       </div>
-      <button onClick={joinEvent}>Add to cart</button>
+      <button onClick={joinEvent}>Add event to your list</button>
     </div>
   );
 }

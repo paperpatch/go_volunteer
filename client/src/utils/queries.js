@@ -116,6 +116,59 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_EVENTS = gql`
+  query getEvents($category: ID) {
+    events(category: $category) {
+      _id
+      category {
+        _id
+      }
+      host {
+        _id
+        firstName
+        lastName
+      }
+      title
+      attendees {
+        _id
+        firstName
+        lastName
+      }
+      location
+      description
+      date
+      startTime
+      endTime
+      url
+      image
+      comments {
+        _id
+        commentText
+        createdAt
+        replies {
+          _id
+          replyBody
+        }
+        author {
+          _id
+          firstName
+          lastName
+        }
+      }
+      eventLikes {
+        _id
+        user {
+          _id
+        }
+        eventLikes
+        event {
+          _id
+        }
+      }
+    }
+  }
+`;
+
+/* export const QUERY_EVENTS = gql`
   {
     events {
       _id
@@ -163,7 +216,7 @@ export const QUERY_EVENTS = gql`
       }
     }
   }
-`;
+`; */
 
 export const QUERY_EVENT = gql`
   query Event($id: ID) {
