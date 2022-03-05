@@ -19,37 +19,50 @@ db.once('open', async () => {
 
   await Event.deleteMany();
 
-  const events = await Event.insert([
-    {
-      host: 'Test',
-      title: 'Volunteer at Special Olympics!',
-      description:
-        'Help students by coaching and assisting in their game play. All available sports are listed in our website.',
-      category: categories[0]._id,
-      location: 'Your local special olympics committee',
-      date: 'March 2, 2022',
-      startTime: '9 AM',
-      endTime: '5 PM',
-      url: 'https://www.specialolympics.org/',
-      image: 'Special_Olympics_logo.svg',
-    }
-    // {
-    //   host: 'Random',
-    //   title: 'High school tutoring',
-    //   description:
-    //     'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
-    //   category: categories[0]._id,
-    //   location: '[redacted] High School',
-    //   date: 'March 5, 2022',
-    //   startTime: '7 PM',
-    //   endTime: '9 PM',
-    //   url: 'https://en.wikipedia.org/wiki/Secondary_school',
-    //   image: 'tutoring.jpg',
-    // },
-  ])
-  ;
+  // const events = await Event.insertMany([
+  //   {
+  //     host: 'Test',
+  //     title: 'Volunteer at Special Olympics!',
+  //     description:
+  //       'Help students by coaching and assisting in their game play. All available sports are listed in our website.',
+  //     category: categories[0]._id,
+  //     location: 'Your local special olympics committee',
+  //     date: 'March 2, 2022',
+  //     startTime: '9 AM',
+  //     endTime: '5 PM',
+  //     url: 'https://www.specialolympics.org/',
+  //     image: 'Special_Olympics_logo.svg',
+  //   },
+  //   {
+  //     host: 'Random',
+  //     title: 'High school tutoring',
+  //     description:
+  //       'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
+  //     category: categories[0]._id,
+  //     location: '[redacted] High School',
+  //     date: 'March 5, 2022',
+  //     startTime: '7 PM',
+  //     endTime: '9 PM',
+  //     url: 'https://en.wikipedia.org/wiki/Secondary_school',
+  //     image: 'tutoring.jpg',
+  //   },
+  // ]);
 
- 
+ const events = await Event.create(
+    {
+      host: 'Random',
+      title: 'High school tutoring',
+      description:
+        'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
+      category: categories[0]._id,
+      location: '[redacted] High School',
+      date: 'March 5, 2022',
+      startTime: '7 PM',
+      endTime: '9 PM',
+      url: 'https://en.wikipedia.org/wiki/Secondary_school',
+      image: 'tutoring.jpg',
+    },
+  );
 
   console.log('events seeded');
 
