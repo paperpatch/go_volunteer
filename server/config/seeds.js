@@ -47,7 +47,7 @@ db.once('open', async () => {
       startTime: '9 AM',
       endTime: '5 PM',
       url: 'https://www.specialolympics.org/',
-      image: 'Special_Olympics_logo.jpg',
+      image: 'Special_Olympics_logo.png',
     },
     {
       category: categories[1]._id,

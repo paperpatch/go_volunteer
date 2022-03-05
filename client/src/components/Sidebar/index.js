@@ -18,7 +18,7 @@ const Sidebar = () => {
     state.cart.forEach((item) => {
       sum += 1;
     });
-    return sum.toFixed(2);
+    return sum;
   }
 
   if (!state.cartOpen) {

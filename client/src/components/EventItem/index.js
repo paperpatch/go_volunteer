@@ -24,14 +24,9 @@ function EventItem(item) {
   const joinEvent = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
     if (itemInCart) {
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        eventQuantity: parseInt(itemInCart.eventQuantity) + 1
-      });
-    } else {
       dispatch({
         type: ADD_TO_SIDEBAR,
-        product: { ...item, eventQuantity: 1 }
+        event: { ...item, eventQuantity: 1 }
       });
       idbPromise('cart', 'put', { ...item, eventQuantity: 1 });
     }
@@ -49,11 +44,11 @@ function EventItem(item) {
       <div>
         <div>Location: {location}</div>
         <div>Date: {date}</div>
-        <div>startTime: {startTime}</div>
-        <div>endTime: {endTime}</div>
-        <div>url: {url}</div>
+        <div>Start Time: {startTime}</div>
+        <div>End Time: {endTime}</div>
+        <div>Website: {url}</div>
       </div>
-      <button onClick={joinEvent}>Add event to your list</button>
+      <button onClick={joinEvent}>Add Event</button>
     </div>
   );
 }

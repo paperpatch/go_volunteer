@@ -27,6 +27,7 @@ const typeDefs = gql`
     email: String!
     location: String
     profilePicture: String
+    events: Event
   }
 
   type Comment {

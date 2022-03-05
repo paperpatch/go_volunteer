@@ -18,18 +18,8 @@ export const QUERY_ME = gql`
       email
       location
       profilePicture
-      connections {
-        _id
-        firstName
-        lastName
-      }
       events {
         _id
-        host {
-          _id
-          firstName
-          lastName
-        }
         title
         location
         description
@@ -38,9 +28,6 @@ export const QUERY_ME = gql`
         endTime
         url
         image
-        attendees {
-          _id
-        }
       }
     }
   }
@@ -55,18 +42,8 @@ export const QUERY_USERS = gql`
       email
       location
       profilePicture
-      connections {
-        _id
-        firstName
-        lastName
-      }
       events {
         _id
-        host {
-          _id
-          firstName
-          lastName
-        }
         title
         location
         description
@@ -88,22 +65,9 @@ export const QUERY_USER = gql`
       lastName
       location
       profilePicture
-      connections {
-        _id
-        firstName
-        lastName
-      }
       events {
         _id
-        host {
-          _id
-          lastName
-          firstName
-        }
         title
-        attendees {
-          _id
-        }
         location
         description
         startTime
@@ -134,56 +98,6 @@ export const QUERY_EVENTS = gql`
   }
 `;
 
-/* export const QUERY_EVENTS = gql`
-  {
-    events {
-      _id
-      host {
-        _id
-        firstName
-        lastName
-      }
-      title
-      attendees {
-        _id
-        firstName
-        lastName
-      }
-      location
-      description
-      date
-      startTime
-      endTime
-      url
-      image
-      comments {
-        _id
-        commentText
-        createdAt
-        replies {
-          _id
-          replyBody
-        }
-        author {
-          _id
-          firstName
-          lastName
-        }
-      }
-      eventLikes {
-        _id
-        user {
-          _id
-        }
-        eventLikes
-        event {
-          _id
-        }
-      }
-    }
-  }
-`; */
-
 export const QUERY_EVENT = gql`
   query Event($id: ID) {
     event(_id: $id) {
@@ -196,22 +110,6 @@ export const QUERY_EVENT = gql`
       endTime
       url
       image
-    }
-  }
-`;
-
-export const QUERY_COMMENTS = gql`
-  {
-    comments {
-      _id
-      author {
-        _id
-        firstName
-        lastName
-      }
-      commentText
-      createdAt
-      likes
     }
   }
 `;

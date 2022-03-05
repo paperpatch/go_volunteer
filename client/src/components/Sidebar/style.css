@@ -34,7 +34,7 @@
 .cart-closed {
   position: fixed;
   top: 5%;
-  left: 1%;
+  right: 1%;
   font-size: 2rem;
   cursor: pointer;
   border-radius: 50%;
