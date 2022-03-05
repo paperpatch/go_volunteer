@@ -1,14 +1,8 @@
 const { Schema, model } = require("mongoose");
 const dateFormatter = require("../utils/dateFormat");
-const EventLike = require('./EventLike');
-const User = require('./User');
 
 const eventSchema = new Schema(
   {
-    host: {
-      type: String,
-      ref: "User",
-    },
     category: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
@@ -20,7 +14,6 @@ const eventSchema = new Schema(
       trim: true,
       maxlength: 280,
     },
-    attendees: [ User.schema ],
     location: {
       type: String,
       required: true,
@@ -44,11 +37,11 @@ const eventSchema = new Schema(
     },
     startTime: {
       type: String,
-      required: true,
+      required: false,
     },
     endTime: {
       type: String,
-      required: true,
+      required: false,
     },
     url: {
       type: String,
@@ -59,13 +52,6 @@ const eventSchema = new Schema(
       default:
         "https://images.unsplash.com/photo-1513477967668-2aaf11838bd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3774&q=80",
     },
-    comments: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
-    eventLikes: [ EventLike.schema ],
   },
   {
     toJSON: {

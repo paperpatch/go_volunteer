@@ -50,53 +50,6 @@ const resolvers = {
         .select("-__v -password")
         .populate("events")
     },
-
-    // user: async (parent, args, context) => {
-    //   if (context.user) {
-    //     const user = await User.findById(context.user._id).populate({
-    //       path: 'orders.products',
-    //       populate: 'category'
-    //     });
-
-    //     user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-    //     return user;
-    //   }
-
-    //   throw new AuthenticationError('Not logged in');
-    // },
-
-    // find user by id
-    // user: async (parent, { _id }) => {
-    //   return await User.findOne({ _id })
-    //     .select("-__v -password")
-    //     .populate("events")
-    // },
-
-    // // get all events
-    // events: async () => {
-    //   return await Event.find()
-    //     .sort({ date: -1 })
-    //     .populate("host")
-    //     .populate("attendees")
-    //     .populate("comments")
-    //     .populate("eventLikes")
-    //     .populate({ path: "comments", populate: "author" })
-    //     .select("-__v");
-    // },
-
-    // event: async (parent, { _id }) => {
-    //   const searchedEvent = await Event.findOne({ _id })
-    //     .sort({ date: -1 })
-    //     .populate("host")
-    //     .populate("attendees")
-    //     .populate("comments")
-    //     .populate("eventLikes")
-    //     .populate({ path: "comments", populate: "author" })
-    //     .populate("eventLikes")
-    //     .select("-__v");
-    //   return searchedEvent;
-    // },
   },
 
   Mutation: {
@@ -201,8 +154,6 @@ const resolvers = {
           { $push: { comments: comment } },
           { new: true }
         )
-          .populate("host")
-          .populate("attendees")
           .populate("comments")
           .populate({ path: "comments", populate: "author" })
           .select("-__v");

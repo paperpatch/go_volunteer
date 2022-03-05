@@ -18,7 +18,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, 'Must be a valid email address!']
   },
   password: {
     type: String,
@@ -28,12 +27,6 @@ const userSchema = new Schema({
   profilePicture: {
     type: String
   },
-  connections: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ],
   events: [
     {
       type: Schema.Types.ObjectId,

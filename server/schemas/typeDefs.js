@@ -9,9 +9,7 @@ const typeDefs = gql`
   type Event {
     _id: ID
     category: Category
-    host: User
     title: String
-    attendees: [User]
     location: String
     description: String
     date: String
@@ -20,8 +18,6 @@ const typeDefs = gql`
     url: String
     image: String
     createdAt: String
-    comments: [Comment]
-    eventLikes: [EventLike]
   }
 
   type User {
@@ -31,8 +27,6 @@ const typeDefs = gql`
     email: String!
     location: String
     profilePicture: String
-    connections: [User]
-    events: [Event]
   }
 
   type Comment {
