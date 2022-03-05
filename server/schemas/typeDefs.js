@@ -6,26 +6,10 @@ const typeDefs = gql`
     name: String
   }
 
-  type User {
-    _id: ID
-    firstName: String!
-    lastName: String!
-    email: String!
-    location: String
-    profilePicture: String
-    connections: [User]
-    events: [Event]
-  }
-
-  type Auth {
-    user: User
-    token: ID!
-  }
-
   type Event {
     _id: ID
-    host: User
     category: Category
+    host: User
     title: String
     attendees: [User]
     location: String
@@ -38,6 +22,17 @@ const typeDefs = gql`
     createdAt: String
     comments: [Comment]
     eventLikes: [EventLike]
+  }
+
+  type User {
+    _id: ID
+    firstName: String!
+    lastName: String!
+    email: String!
+    location: String
+    profilePicture: String
+    connections: [User]
+    events: [Event]
   }
 
   type Comment {
@@ -63,12 +58,17 @@ const typeDefs = gql`
     user: User
   }
 
+  type Auth {
+    user: User
+    token: ID!
+  }
+
   type Query {
     me: User
     categories: [Category]
     users: [User]
     user(_id: ID!): User
-    events: [Event]
+    events(category: ID, name: String): [Event]
     event(_id: ID): Event
   }
 

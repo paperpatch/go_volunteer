@@ -33,19 +33,19 @@ db.once('open', async () => {
       url: 'https://www.specialolympics.org/',
       image: 'Special_Olympics_logo.svg',
     },
-    // {
-    //   host: 'Random',
-    //   title: 'High school tutoring',
-    //   description:
-    //     'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
-    //   category: categories[0]._id,
-    //   location: '[redacted] High School',
-    //   date: 'March 5, 2022',
-    //   startTime: '7 PM',
-    //   endTime: '9 PM',
-    //   url: 'https://en.wikipedia.org/wiki/Secondary_school',
-    //   image: 'tutoring.jpg',
-    // },
+    {
+      host: 'Random',
+      title: 'High school tutoring',
+      description:
+        'Looking for help in calculus I for [redacted] High School. Please contact me at [redacted] or email me at [redacted]. Thank you.',
+      category: categories[0]._id,
+      location: '[redacted] High School',
+      date: 'March 5, 2022',
+      startTime: '7 PM',
+      endTime: '9 PM',
+      url: 'https://en.wikipedia.org/wiki/Secondary_school',
+      image: 'tutoring.jpg',
+    },
   ]);
 
   console.log('events seeded');

@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 const dateFormatter = require("../utils/dateFormat");
 const EventLike = require('./EventLike');
-const Comment = require('./Comment');
 const User = require('./User');
 
 const eventSchema = new Schema(
@@ -37,6 +36,11 @@ const eventSchema = new Schema(
       required: true,
       get: (timestamp) =>
         dateFormatter(timestamp, { dateSuffix: false, monthLength: "Long" }),
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: timestamp => dateFormat(timestamp)
     },
     startTime: {
       type: String,
