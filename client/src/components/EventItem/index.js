@@ -23,13 +23,13 @@ function EventItem(item) {
 
   const joinEvent = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
-    console.log('working');
-    if (itemInCart) {
+    if (!itemInCart) {
       dispatch({
         type: ADD_TO_CART,
         event: { ...item, attendingEvent: 1 }
       });
       idbPromise('cart', 'put', { ...item, attendingEvent: 1 });
+      console.log('added event to your list')
     }
   }
 

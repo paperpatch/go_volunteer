@@ -5,7 +5,7 @@ export function pluralize(name, count) {
   return name + 's';
 }
 
-export function idbPromise(eventName, method, object) {
+export function idbPromise(storeName, method, object) {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open('go-volunteer', 1);
     let db, tx, store;
@@ -22,8 +22,8 @@ export function idbPromise(eventName, method, object) {
 
     request.onsuccess = function(e) {
       db = request.result;
-      tx = db.transaction(eventName, 'readwrite');
-      store = tx.objectStore(eventName);
+      tx = db.transaction(storeName, 'readwrite');
+      store = tx.objectStore(storeName);
 
       db.onerror = function(e) {
         console.log('error', e);

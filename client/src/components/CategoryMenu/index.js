@@ -34,6 +34,7 @@ function CategoryMenu() {
     }
   }, [categoryData, loading, dispatch]);
 
+  // undefined makes it display everything. blank values does not work.
   const handleAllClick = () => {
     dispatch({
       type: UPDATE_CURRENT_CATEGORY,

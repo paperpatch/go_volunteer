@@ -21,10 +21,10 @@ function EventList() {
         events: data.events,
       });
       data.events.forEach((event) => {
-        idbPromise('events', 'put', event);
+        idbPromise('cart', 'put', event);
       });
     } else if (!loading) {
-      idbPromise('events', 'get').then((events) => {
+      idbPromise('cart', 'get').then((events) => {
         dispatch({
           type: UPDATE_EVENTS,
           events: events,
