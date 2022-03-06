@@ -1,15 +1,15 @@
 import React from 'react';
 import { useStoreContext } from "../../utils/GlobalState";
-import { REMOVE_FROM_SIDEBAR } from "../../utils/actions";
+import { REMOVE_FROM_CART } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
-const SidebarItem = ({ item }) => {
+const CartItem = ({ item }) => {
 
   const [ dispatch ] = useStoreContext();
 
-  const removeFromSidebar = item => {
+  const removeFromCart = item => {
     dispatch({
-      type: REMOVE_FROM_SIDEBAR,
+      type: REMOVE_FROM_CART,
       _id: item._id
     });
     idbPromise('cart', 'delete', { ...item });
@@ -25,15 +25,15 @@ const SidebarItem = ({ item }) => {
         />
       </div>
       <div>
-        <div>{item.name}, ${item.price}</div>
+        <div>{item.title}</div>
+        <div>{item.date}</div>
         <div>
-          <span>Qty:</span>
           <span
             role="img"
             aria-label="trash"
-            onClick={() => removeFromSidebar(item)}
+            onClick={() => removeFromCart(item)}
           >
-            Remove from your list
+            🗑️
           </span>
         </div>
       </div>
@@ -41,4 +41,4 @@ const SidebarItem = ({ item }) => {
   );
 }
 
-export default SidebarItem;
+export default CartItem;

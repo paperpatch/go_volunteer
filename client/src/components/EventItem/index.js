@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 // import { pluralize } from "../../utils/helpers"
 import { useStoreContext } from "../../utils/GlobalState";
-import { ADD_TO_SIDEBAR } from "../../utils/actions";
+import { ADD_TO_CART } from "../../utils/actions";
 import { idbPromise } from "../../utils/helpers";
 
 function EventItem(item) {
@@ -23,12 +23,13 @@ function EventItem(item) {
 
   const joinEvent = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)
+    console.log('working');
     if (itemInCart) {
       dispatch({
-        type: ADD_TO_SIDEBAR,
-        event: { ...item, eventQuantity: 1 }
+        type: ADD_TO_CART,
+        event: { ...item, attendingEvent: 1 }
       });
-      idbPromise('cart', 'put', { ...item, eventQuantity: 1 });
+      idbPromise('cart', 'put', { ...item, attendingEvent: 1 });
     }
   }
 

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
-import Cart from '../components/Sidebar';
+import Cart from '../components/Cart';
 import { useStoreContext } from '../utils/GlobalState';
 import {
-  REMOVE_FROM_SIDEBAR,
-  ADD_TO_SIDEBAR,
+  REMOVE_FROM_CART,
+  ADD_TO_CART,
   UPDATE_EVENTS,
 } from '../utils/actions';
 import { QUERY_EVENTS } from '../utils/queries';
@@ -59,7 +59,7 @@ function Detail() {
       });
     } else {
       dispatch({
-        type: ADD_TO_SIDEBAR,
+        type: ADD_TO_CART,
         product: { ...currentProduct, purchaseQuantity: 1 },
       });
       idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
@@ -68,7 +68,7 @@ function Detail() {
 
   const removeFromCart = () => {
     dispatch({
-      type: REMOVE_FROM_SIDEBAR,
+      type: REMOVE_FROM_CART,
       _id: currentProduct._id,
     });
 
