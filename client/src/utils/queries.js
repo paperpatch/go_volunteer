@@ -33,6 +33,28 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_USER = gql`
+  {
+    user {
+      _id
+      firstName
+      lastName
+      location
+      profilePicture
+      events {
+        _id
+        title
+        location
+        description
+        startTime
+        date
+        endTime
+        url
+      }
+    }
+  }
+`;
+
 export const QUERY_USERS = gql`
   query users {
     users {
@@ -52,28 +74,6 @@ export const QUERY_USERS = gql`
         endTime
         url
         image
-      }
-    }
-  }
-`;
-
-export const QUERY_USER = gql`
-  query Query($id: ID!) {
-    user(_id: $id) {
-      _id
-      firstName
-      lastName
-      location
-      profilePicture
-      events {
-        _id
-        title
-        location
-        description
-        startTime
-        date
-        endTime
-        url
       }
     }
   }

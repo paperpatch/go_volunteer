@@ -17,16 +17,18 @@ function Detail() {
   const [state, dispatch] = useStoreContext();
   const { id } = useParams();
 
-  const [currentProduct, setCurrentProduct] = useState({});
+  const [currentEvent, setcurrentEvent] = useState({});
 
   const { loading, data } = useQuery(QUERY_EVENTS);
 
   const { events, cart } = state;
 
+  console.log('events', events)
+
   useEffect(() => {
     // already in global store
     if (events.length) {
-      setCurrentProduct(events.find((product) => product._id === id));
+      setcurrentEvent(events.find((event) => event._id === id));
     }
     // retrieved from server
     else if (data) {
@@ -35,8 +37,8 @@ function Detail() {
         events: data.events,
       });
 
-      data.events.forEach((product) => {
-        idbPromise('products', 'put', product);
+      data.events.forEach((event) => {
+        idbPromise('events', 'put', event);
       });
     }
     // get cache from idb
@@ -60,36 +62,35 @@ function Detail() {
     } else {
       dispatch({
         type: ADD_TO_CART,
-        product: { ...currentProduct, purchaseQuantity: 1 },
+        product: { ...currentEvent, purchaseQuantity: 1 },
       });
-      idbPromise('cart', 'put', { ...currentProduct, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', { ...currentEvent, purchaseQuantity: 1 });
     }
   };
 
   const removeFromCart = () => {
     dispatch({
       type: REMOVE_FROM_CART,
-      _id: currentProduct._id,
+      _id: currentEvent._id,
     });
 
-    idbPromise('cart', 'delete', { ...currentProduct });
+    idbPromise('cart', 'delete', { ...currentEvent });
   };
 
   return (
     <>
-      {currentProduct && cart ? (
+      {currentEvent && cart ? (
         <div className="container my-1">
           <Link to="/">← Back to Events</Link>
 
-          <h2>{currentProduct.name}</h2>
+          <h2>{currentEvent.title}</h2>
 
-          <p>{currentProduct.description}</p>
+          <p>{currentEvent.description}</p>
 
           <p>
-            <strong>Price:</strong>${currentProduct.price}{' '}
-            <button onClick={addToCart}>Volunteer!</button>
+            <button onClick={addToCart}>Add Event</button>
             <button
-              disabled={!cart.find((p) => p._id === currentProduct._id)}
+              disabled={!cart.find((p) => p._id === currentEvent._id)}
               onClick={removeFromCart}
             >
               Remove from your Events
@@ -97,8 +98,8 @@ function Detail() {
           </p>
 
           <img
-            src={`/images/${currentProduct.image}`}
-            alt={currentProduct.name}
+            src={`/images/${currentEvent.image}`}
+            alt={currentEvent.title}
           />
         </div>
       ) : null}

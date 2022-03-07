@@ -26,9 +26,9 @@ function EventItem(item) {
     if (!itemInCart) {
       dispatch({
         type: ADD_TO_CART,
-        event: { ...item, attendingEvent: 1 }
+        event: { ...item, attendingEvent: true }
       });
-      idbPromise('cart', 'put', { ...item, attendingEvent: 1 });
+      idbPromise('cart', 'put', { ...item, attendingEvent: true });
       console.log('added event to your list')
     }
   }
