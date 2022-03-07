@@ -11,7 +11,7 @@ const Cart = () => {
 
   useEffect(() => {
     async function getCart() {
-      const cart = await idbPromise('cart', 'get');
+      const cart = await idbPromise('events', 'get');
       dispatch({ type: ADD_MULTIPLE_TO_CART, events: [...cart] });
       console.log(cart);
     }
