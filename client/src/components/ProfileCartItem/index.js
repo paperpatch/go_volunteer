@@ -26,7 +26,12 @@ const CartItem = ({ item }) => {
       </div>
       <div>
         <div>{item.title}</div>
-        <div>{item.date}</div>
+        <div>Date: {item.date}</div>
+        <div>Location: {item.location}</div>
+        <div>Description: {item.description}</div>
+        <div>Start Time: {item.startTime}</div>
+        <div>End Time: {item.endTime}</div>
+        <div>Website: {item.url}</div>
         <div>
           <span
             role="img"
