@@ -52,6 +52,7 @@ function EventList() {
             <EventItem
               key={event._id}
               _id={event._id}
+              host={event.host}
               image={event.image}
               title={event.title}
               location={event.location}

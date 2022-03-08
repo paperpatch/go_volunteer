@@ -8,6 +8,7 @@ const typeDefs = gql`
 
   type Event {
     _id: ID
+    host: String
     category: Category
     title: String
     location: String
@@ -76,6 +77,7 @@ const typeDefs = gql`
     ): Auth
     login(email: String!, password: String!): Auth
     createEvent(
+      host: String!
       title: String!
       location: String!
       description: String!

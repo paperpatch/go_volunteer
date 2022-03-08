@@ -26,6 +26,7 @@ const CartItem = ({ item }) => {
       </div>
       <div>
         <div>{item.title}</div>
+        <div>{item.host}</div>
         <div>{item.date}</div>
         <div>
           <span

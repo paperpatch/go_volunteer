@@ -20,6 +20,7 @@ export const QUERY_ME = gql`
       profilePicture
       events {
         _id
+        host
         title
         location
         description
@@ -43,6 +44,7 @@ export const QUERY_USER = gql`
       profilePicture
       events {
         _id
+        host
         title
         location
         description
@@ -66,6 +68,7 @@ export const QUERY_USERS = gql`
       profilePicture
       events {
         _id
+        host
         title
         location
         description
@@ -86,6 +89,7 @@ export const QUERY_EVENTS = gql`
       category {
         _id
       }
+      host
       title
       location
       description
@@ -102,6 +106,7 @@ export const QUERY_EVENT = gql`
   query Event($id: ID) {
     event(_id: $id) {
       _id
+      host
       title
       location
       description

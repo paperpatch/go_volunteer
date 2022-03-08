@@ -37,6 +37,7 @@ export const ADD_USER = gql`
 
 export const CREATE_EVENT = gql`
   mutation createEvent(
+    $host: String!
     $title: String!
     $location: String!
     $description: String!
@@ -47,6 +48,7 @@ export const CREATE_EVENT = gql`
     $image: String!
   ) {
     createEvent(
+      host: $host
       title: $title
       location: $location
       description: $description

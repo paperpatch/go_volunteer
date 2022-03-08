@@ -10,6 +10,7 @@ function EventItem(item) {
 
   const {
     _id,
+    host,
     image,
     title,
     location,
@@ -43,6 +44,7 @@ function EventItem(item) {
         <p>{title}</p>
       </Link>
       <div>
+        <div>Host: {host}</div>
         <div>Location: {location}</div>
         <div>Date: {date}</div>
         <div>Start Time: {startTime}</div>

@@ -3,6 +3,10 @@ const dateFormatter = require("../utils/dateFormat");
 
 const eventSchema = new Schema(
   {
+    host: {
+      type: String,
+      required: true,
+    },
     category: {
       type: Schema.Types.ObjectId,
       ref: 'Category',

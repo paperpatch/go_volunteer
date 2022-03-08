@@ -30,6 +30,7 @@ db.once('open', async () => {
 
   const events = await Event.insertMany([
     {
+      host: '[redacted] High School',
       category: categories[0]._id,
       title: 'High school tutoring',
       location: '[redacted] High School',
@@ -43,6 +44,7 @@ db.once('open', async () => {
       image: 'tutoring.jpg',
     },
     {
+      host: 'Exchange Center',
       category: categories[0]._id,
       title: 'Become a Host Family to a High School Exchange Student!',
       location: 'Your house',
@@ -56,6 +58,7 @@ db.once('open', async () => {
       image: 'icesusa_logo.png',
     },
     {
+      host: '[redacted] Daycare',
       category: categories[0]._id,
       title: 'Child Care Volunteer',
       location: 'Your local Daycare center',
@@ -69,6 +72,7 @@ db.once('open', async () => {
       image: 'daycare_logo.jpg',
     },
     {
+      host: '[Town]',
       category: categories[1]._id,
       title: '[Town] Celebration!',
       location: 'At your local town',
@@ -82,6 +86,7 @@ db.once('open', async () => {
       image: 'volunteer_hand.jpg',
     },
     {
+      host: 'Helping Hands',
       category: categories[1]._id,
       title: 'Furniture for the Homeless',
       location: 'This original place',
@@ -95,6 +100,7 @@ db.once('open', async () => {
       image: 'help_homeless.jpg',
     },
     {
+      host: 'Earth Day Center',
       category: categories[2]._id,
       title: 'Earth Day Clean Up',
       location: 'Your local community center',
@@ -108,6 +114,7 @@ db.once('open', async () => {
       image: 'earth_day.jpg',
     },
     {
+      host: 'Team Trees',
       category: categories[2]._id,
       title: 'Join Team Trees',
       location: 'Global',
@@ -121,6 +128,7 @@ db.once('open', async () => {
       image: 'team_trees.png',
     },
     {
+      host: '[Local] Climate Center',
       category: categories[2]._id,
       title: 'Climate Environment Advocate',
       location: 'Somewhere in here',
@@ -134,6 +142,7 @@ db.once('open', async () => {
       image: 'climate_change.jpg',
     },
     {
+      host: '[redacted] Health Center',
       category: categories[3]._id,
       title: 'Community Health Center Volunteer',
       location: 'Multiple locations',
@@ -147,6 +156,7 @@ db.once('open', async () => {
       image: 'health_care.jpg',
     },
     {
+      host: 'Healthy Body Fight',
       category: categories[3]._id,
       title: 'Fight Against Pancreatic Cancer',
       location: 'Virtual Meetings',
@@ -160,6 +170,7 @@ db.once('open', async () => {
       image: 'pancreatic_cancer.jpg',
     },
     {
+      host: '[High School] Special Olympics',
       category: categories[4]._id,
       title: 'Volunteer at Special Olympics!',
       location: 'Your local special olympics committee',
@@ -173,6 +184,7 @@ db.once('open', async () => {
       image: 'Special_Olympics_logo.png',
     },
     {
+      host: '[Town]',
       category: categories[4]._id,
       title: 'Volunteers Needed for Annual Half Marathon',
       location: '[Redacted] Park',
@@ -186,6 +198,7 @@ db.once('open', async () => {
       image: 'running_logo.png',
     },
     {
+      host: 'Adapted Sports',
       category: categories[4]._id,
       title: 'Adapted Sports - Track and Field training',
       location: 'Your local senior care center',
