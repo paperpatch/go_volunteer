@@ -38,6 +38,7 @@ export const ADD_USER = gql`
 export const CREATE_EVENT = gql`
   mutation createEvent(
     $host: String!
+    $category: String!
     $title: String!
     $location: String!
     $description: String!
@@ -49,6 +50,7 @@ export const CREATE_EVENT = gql`
   ) {
     createEvent(
       host: $host
+      category: $category
       title: $title
       location: $location
       description: $description
@@ -59,6 +61,8 @@ export const CREATE_EVENT = gql`
       image: $image
     ) {
       _id
+      host
+      category
       title
       location
       description
@@ -75,6 +79,7 @@ export const JOIN_EVENT = gql`
   mutation joinEvent($eventId: ID!) {
     joinEvent(eventId: $eventId) {
       _id
+      host
       title
       location
       description
@@ -91,6 +96,7 @@ export const LEAVE_EVENT = gql`
   mutation leaveEvent($eventId: ID!) {
     leaveEvent(eventId: $eventId) {
       _id
+      host
       title
       location
       description
