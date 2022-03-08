@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
 
+
+
+
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
@@ -30,11 +33,49 @@ function Login(props) {
   };
 
   return (
-    <div className="container my-1">
-      <Link to="/signup">← Go to Signup</Link>
+    <div className="container my-1 mt-5 pt-5">
 
-      <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
+      <div class="card mx-auto w-50">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Login</a>
+            </li>
+            <li class="nav-item">
+              {/* <a class="nav-link"><Link to="/signup">Signup</Link></a> */}
+              <a class="nav-link" href="/signup">Signup</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
+
+        {error ? (
+          <div>
+            <p className="error-text">The provided credentials are incorrect</p>
+          </div>
+        ) : null}
+
+          <div class="form-group my-3">
+            <label htmlFor="email" class="mb-2">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="youremail@test.com" onChange={handleChange}></input>
+              {/* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> */}
+          </div>
+          <div class="form-group my-3">
+            <label  htmlFor="pwd" class="mb-2">Password</label>
+            <input  name="password" type="password" class="form-control" id="pwd" placeholder="******" onChange={handleChange}></input>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      
+
+      {/* <h2>Login</h2> */}
+      {/* <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
           <label htmlFor="email">Email address:</label>
           <input
@@ -55,16 +96,15 @@ function Login(props) {
             onChange={handleChange}
           />
         </div>
-        {error ? (
-          <div>
-            <p className="error-text">The provided credentials are incorrect</p>
-          </div>
-        ) : null}
+        
         <div className="flex-row flex-end">
           <button type="submit">Submit</button>
         </div>
-      </form>
+      </form> */}
     </div>
+
+
+
   );
 }
 

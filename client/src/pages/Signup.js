@@ -32,10 +32,82 @@ function Signup(props) {
   };
 
   return (
-    <div className="container my-1">
+    <div className="container my-1 mt-5 pt-5">
+
+      <div class="card mx-auto w-50">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li class="nav-item active">
+              {/* <a class="nav-link"><Link to="/signup">Signup</Link></a> */}
+              <a class="nav-link" href="/signup">Signup</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+        </div>
+
+        <form class="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
+
+        <div class="form-group my-3">
+          <label htmlFor="firstName">First Name:</label>
+            <input
+              placeholder="First"
+              name="firstName"
+              type="firstName"
+              id="firstName"
+              onChange={handleChange}
+            />
+        </div>
+        
+        <div className="form-group my-3">
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            placeholder="Last"
+            name="lastName"
+            type="lastName"
+            id="lastName"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group my-3">
+          <label htmlFor="email">Email:</label>
+          <input
+            placeholder="youremail@test.com"
+            name="email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group my-3">
+          <label htmlFor="pwd">Password:</label>
+          <input
+            placeholder="******"
+            name="password"
+            type="password"
+            id="pwd"
+            onChange={handleChange}
+          />
+        </div>
+
+
+         
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+
+
+
       <Link to="/login">← Go to Login</Link>
 
-      <h2>Signup</h2>
+      {/* <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
           <label htmlFor="firstName">First Name:</label>
@@ -80,7 +152,7 @@ function Signup(props) {
         <div className="flex-row flex-end">
           <button type="submit">Submit</button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 }
