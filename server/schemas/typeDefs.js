@@ -78,6 +78,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createEvent(
       host: String!
+      category: String!
       title: String!
       location: String!
       description: String!

@@ -88,6 +88,7 @@ export const QUERY_EVENTS = gql`
       _id
       category {
         _id
+        name
       }
       host
       title
@@ -106,6 +107,10 @@ export const QUERY_EVENT = gql`
   query Event($id: ID) {
     event(_id: $id) {
       _id
+      category {
+        _id
+        name
+      }
       host
       title
       location

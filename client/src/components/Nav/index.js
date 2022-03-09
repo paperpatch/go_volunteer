@@ -57,7 +57,7 @@ function Nav() {
         </Link>
       </h1>
 
-      <nav class="d-flex align-items-center">
+      <nav className="d-flex align-items-center">
         {showNavigation()}
       </nav>
     </header>

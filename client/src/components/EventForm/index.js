@@ -5,9 +5,18 @@ import { CREATE_EVENT } from "../../utils/mutations";
 import { QUERY_EVENTS } from "../../utils/queries";
 
 export default function NewEvent({ onEventSubmit, showSuccessMod }) {
+
+  const categories = [
+    { name: 'Children & Youth' },
+    { name: 'Community' },
+    { name: 'Environment' },
+    { name: 'Health & Medicine' },
+    { name: 'Sports & Recreation' }
+  ];
+
   const [formData, setFormData] = useState({
     host: "",
-    category: "",
+    category: categories[0]._id,
     title: "",
     description: "",
     location: "",
@@ -38,6 +47,7 @@ export default function NewEvent({ onEventSubmit, showSuccessMod }) {
   };
 
   const handleSubmit = async (e) => {
+    console.log ({...formData})
     e.preventDefault();
     try {
       await addEvent({
@@ -45,7 +55,7 @@ export default function NewEvent({ onEventSubmit, showSuccessMod }) {
       });
       setFormData({
         host: "",
-        category: "",
+        category: categories[0]._id,
         title: "",
         description: "",
         location: "",
@@ -93,15 +103,15 @@ export default function NewEvent({ onEventSubmit, showSuccessMod }) {
             >
               Category
             </label>
-            <input
-              className="block w-full px-4 py-3 mb-3 leading-tight text-gray-700 bg-gray-200 border border-gray-200 rounded appearance-none focus:outline-none focus:bg-white focus:border-gray-500"
-              id="grid-category"
-              type="text"
-              placeholder="category"
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-            />
+            <div className="select-container">
+              <select name="category" id="selectList" value={this} onChange={handleChange}>
+                <option value={categories[0]._id}>Children & Youth</option>
+                <option value={categories[1]._id}>Community</option>
+                <option value={categories[2]._id}>Environment</option>
+                <option value={categories[3]._id}>Health & Medicine</option>
+                <option value={categories[4]._id}>Sports & Recreation</option>
+              </select>
+            </div>
           </div>
           <div className="w-full px-3 mb-6 md:w-1/2 md:mb-0">
             <label
