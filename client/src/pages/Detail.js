@@ -52,23 +52,19 @@ function Detail() {
     }
   }, [events, data, loading, dispatch, id]);
 
-  const addToCart = () => {
+  const joinEvent = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === id);
-    if (itemInCart) {
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
-      });
-    } else {
+    if (!itemInCart) {
       dispatch({
         type: ADD_TO_CART,
-        product: { ...currentEvent, purchaseQuantity: 1 },
+        event: { ...currentEvent, attendingEvent: true },
       });
-      idbPromise('cart', 'put', { ...currentEvent, purchaseQuantity: 1 });
+      idbPromise('cart', 'put', { ...currentEvent, attendingEvent: true });
+      console.log('added event to your list')
     }
   };
 
-  const removeFromCart = () => {
+  const removeEvent = () => {
     dispatch({
       type: REMOVE_FROM_CART,
       _id: currentEvent._id,
@@ -84,23 +80,31 @@ function Detail() {
           <Link to="/">← Back to Events</Link>
 
           <h2>{currentEvent.title}</h2>
-
-          <p>{currentEvent.description}</p>
-
-          <p>
-            <button onClick={addToCart}>Add Event</button>
-            <button
-              disabled={!cart.find((p) => p._id === currentEvent._id)}
-              onClick={removeFromCart}
-            >
-              Remove from your Events
-            </button>
-          </p>
-
+          <div>Host: {currentEvent.host}</div>
           <img
             src={`/images/${currentEvent.image}`}
             alt={currentEvent.title}
           />
+          <div>
+            <div>{currentEvent.description}</div>
+            <br/>
+            
+            <div>Location: {currentEvent.location}</div>
+            <div>Date: {currentEvent.date}</div>
+            <div>Start Time: {currentEvent.startTime}</div>
+            <div>End Time: {currentEvent.endTime}</div>
+            <div>Website: {currentEvent.url}</div>
+          </div>
+
+          <p>
+            <button onClick={joinEvent}>Add Event</button>
+            <button
+              disabled={!cart.find((p) => p._id === currentEvent._id)}
+              onClick={removeEvent}
+            >
+              Remove from your list.
+            </button>
+          </p>
         </div>
       ) : null}
       {loading ? <img src={spinner} alt="loading" /> : null}

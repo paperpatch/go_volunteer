@@ -39,7 +39,7 @@ const Cart = () => {
       <div className="close" onClick={toggleCart}>
         [close]
       </div>
-      <h2>Recent Events</h2>
+      <h2>Your Tracked Events</h2>
       {state.cart.length ? (
         <div>
           {state.cart.map((item) => (
@@ -47,12 +47,9 @@ const Cart = () => {
           ))}
         </div>
       ) : (
-        <h3>
-          <span role="img" aria-label="shocked">
-            😱
-          </span>
+        <h4>
           There's no scheduled events in your list.
-        </h3>
+        </h4>
       )}
     </div>
   );
