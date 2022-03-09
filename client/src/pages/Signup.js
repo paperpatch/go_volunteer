@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { ADD_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
@@ -34,25 +34,25 @@ function Signup(props) {
   return (
     <div className="container my-1 mt-5 pt-5">
 
-      <div class="card mx-auto w-50">
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+      <div className="card mx-auto w-50">
+        <div className="card-header">
+          <ul className="nav nav-tabs card-header-tabs">
+            <li className="nav-item">
+              <a className="nav-link" href="/login">Login</a>
             </li>
-            <li class="nav-item active">
-              {/* <a class="nav-link"><Link to="/signup">Signup</Link></a> */}
-              <a class="nav-link" href="/signup">Signup</a>
+            <li className="nav-item">
+              {/* <a className="nav-link"><Link to="/signup">Signup</Link></a> */}
+              <a className="nav-link active" href="/signup">Signup</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
+            {/* <li className="nav-item">
+              <a className="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li> */}
           </ul>
         </div>
 
-        <form class="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
+        <form className="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
 
-        <div class="form-group my-3">
+        <div className="form-group my-3">
           <label htmlFor="firstName">First Name:</label>
             <input
               placeholder="First"
@@ -99,13 +99,13 @@ function Signup(props) {
 
          
           
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
 
 
 
-      <Link to="/login">← Go to Login</Link>
+      {/* <Link to="/login">← Go to Login</Link> */}
 
       {/* <h2>Signup</h2>
       <form onSubmit={handleFormSubmit}>

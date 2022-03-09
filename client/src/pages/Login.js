@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
-
-
-
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
@@ -35,23 +32,20 @@ function Login(props) {
   return (
     <div className="container my-1 mt-5 pt-5">
 
-      <div class="card mx-auto w-50">
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Login</a>
+      <div className="card mx-auto w-50">
+        <div className="card-header">
+          <ul className="nav nav-tabs card-header-tabs">
+            <li className="nav-item">
+              <a className="nav-link active" href="/login">Login</a>
             </li>
-            <li class="nav-item">
-              {/* <a class="nav-link"><Link to="/signup">Signup</Link></a> */}
-              <a class="nav-link" href="/signup">Signup</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <li className="nav-item">
+              {/* <a className="nav-link"><Link to="/signup">Signup</Link></a> */}
+              <a className="nav-link" href="/signup">Signup</a>
             </li>
           </ul>
         </div>
 
-        <form class="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
+        <form className="w-75 mx-auto my-4" onSubmit={handleFormSubmit}>
 
         {error ? (
           <div>
@@ -59,17 +53,17 @@ function Login(props) {
           </div>
         ) : null}
 
-          <div class="form-group my-3">
-            <label htmlFor="email" class="mb-2">Email address</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="youremail@test.com" onChange={handleChange}></input>
-              {/* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> */}
+          <div className="form-group my-3">
+            <label htmlFor="email" className="mb-2">Email address</label>
+            <input type="email" className="form-control" id="email" name="email" placeholder="youremail@test.com" onChange={handleChange}></input>
+              {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
           </div>
-          <div class="form-group my-3">
-            <label  htmlFor="pwd" class="mb-2">Password</label>
-            <input  name="password" type="password" class="form-control" id="pwd" placeholder="******" onChange={handleChange}></input>
+          <div className="form-group my-3">
+            <label  htmlFor="pwd" className="mb-2">Password</label>
+            <input  name="password" type="password" className="form-control" id="pwd" placeholder="******" onChange={handleChange}></input>
           </div>
           
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
       
