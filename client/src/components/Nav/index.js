@@ -35,13 +35,13 @@ function Nav() {
             </Link>
           </li>
           <li className="mx-2">
-            <Link to="/signup">
-              Signup
+            <Link to="/login">
+              Login
             </Link>
           </li>
           <li className="mx-2">
-            <Link to="/login">
-              Login
+            <Link to="/signup">
+              Signup
             </Link>
           </li>
         </ul>

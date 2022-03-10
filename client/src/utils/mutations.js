@@ -48,7 +48,7 @@ export const CREATE_EVENT = gql`
     $url: String!
     $image: String!
   ) {
-    createEvent(
+    createEvent (
       host: $host
       category: $category
       title: $title
@@ -62,7 +62,10 @@ export const CREATE_EVENT = gql`
     ) {
       _id
       host
-      category
+      category {
+        _id
+        name
+      }
       title
       location
       description
